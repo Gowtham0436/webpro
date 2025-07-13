@@ -1,0 +1,94 @@
+/* info.css */
+body {
+    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+    background: #fff;
+    max-width: 600px;
+    margin: 50px auto 0 auto;
+    border-radius: 18px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.12);
+    padding: 36px 36px 30px 36px;
+    position: relative;
+}
+
+.project-title {
+    text-align: center;
+    font-size: 2.2em;
+    color: #ff8000;
+    margin-bottom: 22px;
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+
+.project-section {
+    margin-bottom: 22px;
+}
+
+.label {
+    display: block;
+    color: #333;
+    font-size: 1.08em;
+    font-weight: 600;
+    margin-bottom: 3px;
+    letter-spacing: 0.5px;
+}
+
+.value {
+    color: #0077b6;
+    font-size: 1.09em;
+    font-weight: 500;
+    margin-left: 3px;
+}
+
+.team-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.team-list li {
+    margin-bottom: 7px;
+}
+.member-name {
+    color: #8f39c4;
+    font-size: 1.09em;
+    font-weight: 500;
+    margin-right: 10px;
+}
+.member-role {
+    color: #208020;
+    font-size: 0.98em;
+    font-style: italic;
+}
+
+.resource-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.resource-list li {
+    margin-bottom: 8px;
+}
+.resource-list a {
+    color: #0056b3;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+.resource-list a:hover {
+    color: #ff8000;
+    text-decoration: underline;
+}
+
+@media (max-width: 700px) {
+    .container {
+        padding: 18px 6vw 18px 6vw;
+    }
+    .project-title {
+        font-size: 1.4em;
+    }
+}
