@@ -1,0 +1,133 @@
+html {
+    height: 100%;
+}
+
+
+body {
+    margin: 0;
+    font-family: 'Garamond', 'Times New Roman', serif;
+    background-color: #0c1445;
+    background-image: url('pic1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+    text-align: center;
+    overflow: hidden; 
+    height: 90%;
+    margin: 0;
+}
+
+.night-sky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 30%;
+    height: 30%;
+    background-image: url("firework.gif");
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+
+
+/* Starry Background Effect */
+.night-sky::before {
+    content: '';
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    background: rgb(166, 117, 11);
+    box-shadow: 
+        -23vw 2vh 2px 2px #be730b, 8vw 49vh 0px 0px #c7a20e,
+        -1vw 3vh 1px 0px #dc5757, 3vw 24vh 1px 1px #db5959,
+        16vw 46vh 1px 1px #be730b, -15vw 44vh 1px 2px #be730b,
+        -1vw 25vh 0px 2px#be730b, 4vw 13vh 0px 1px #dc5757,
+        -9vw 2vh 0px 2px#be730b, 19vw 3vh 2px 1px #dc5757,
+        -20vw 19vh 2px 1px #be730b, 1vw 39vh 2px 0px #dc5757,
+        19vw 40vh 2px 0px #be730b, 11vw 1vh 2px 1px #dc5757,
+        -3vw 20vh 0px 0px#be730b, -11vw 4vh 1px 1px #dc5757,
+        19vw 3vh 0px 2px#be730b, 14vw 25vh 2px 2px #dc5757,
+        -15vw 12vh 0px 0px #dc5757, -13vw 41vh 2px 0px#dc5757;
+    animation: twinkle 5s infinite alternate;
+}
+
+@keyframes twinkle {
+    from { opacity: 0.5; }
+    to { opacity: 1; }
+}
+
+/* Header and Footer */
+header {
+    padding-top: 20px;
+}
+
+h1 {
+    font-size: 3.5rem;
+    font-weight: normal;
+    color: #f0e68c; /* Khaki */
+    text-shadow: 2px 2px 4px #000;
+}
+
+footer {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    font-size: 1.2rem;
+    color: #d47c11; /* Gainsboro */
+}
+
+/* Fireworks Animation - Adjusted for Monument */
+.firework {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    opacity: 0;
+    animation: launch 10s infinite;
+}
+
+@keyframes launch {
+    0% { transform: translateY(100vh) scale(1); opacity: 0; }
+    10% { opacity: 1; }
+    20% { transform: translateY(30vh) scale(1); opacity: 1; } /* Launch higher */
+    21% { opacity: 0; }
+    22% { transform: scale(1); }
+    25% { opacity: 1; transform: scale(35) translateY(30vh); } /* Explode higher */
+    100% { opacity: 0; transform: scale(0.5) translateY(30vh); }
+}
+
+/* Individual Firework Positions and Colors */
+#fw1 {
+    left: 50%;
+    top: 10%;
+    animation-delay: 0s;
+    box-shadow: 0 0 10px #ff4500, 0 0 20px #ff4500; /* Red-orange */
+}
+
+#fw2 {
+    left: 40%;
+    top: 15%;
+    animation-delay: 2s;
+    box-shadow: 0 0 10px #ffffff, 0 0 20px #ffffff;
+}
+
+#fw3 {
+    left: 60%;
+    top: 15%;
+    animation-delay: 4s;
+    box-shadow: 0 0 10px #4169e1, 0 0 20px #4169e1; /* Royal Blue */
+}
+#fw4 {
+    left: 45%;
+    top: 20%;
+    animation-delay: 6s;
+    box-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700; /* Gold */
+}
+
+#fw5 {
+    left: 55%;
+    top: 20%;
+    animation-delay: 8s;
+    box-shadow: 0 0 10px #c0c0c0, 0 0 20px #c0c0c0;
+}
