@@ -47,7 +47,7 @@ Built using **PHP**, **HTML**, and **CSS**.
 ## Demo & Resources
 
 - [Demo (Codd Server)](https://codd.cs.gsu.edu/~gpatchigolla1/webpro/Pw/1/index.html)
-- [YouTube Presentation](https://www.youtube.com/)
+- [YouTube Presentation](https://youtu.be/rXQJSoYruYI)
 - [GitHub Repo](https://github.com/Gowtham0436/webpro/tree/project)
 - [PowerPoint Presentation](https://docs.google.com/presentation/d/1gyTcUPaBsz2uDh2pqFsoSZ-peWQibwkh/edit?usp=sharing&ouid=103320529633586249533&rtpof=true&sd=true)
 
