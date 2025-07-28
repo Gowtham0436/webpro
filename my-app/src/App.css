@@ -1,0 +1,127 @@
+/* src/App.css */
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background: #f7f9fb;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#root {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.center-container,
+.container {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  padding: 40px 32px 32px 32px;
+  max-width: 420px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  color: #2a4365;
+  font-size: 2rem;
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.counter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 32px;
+  width: 100%;
+}
+
+.counter h1 {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+  color: #3182ce;
+}
+
+.counter button {
+  padding: 8px 24px;
+  font-size: 1.1rem;
+  background: #3182ce;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 8px;
+}
+
+.counter button:hover {
+  background: #225ea8;
+}
+
+input[type="text"].form-control {
+  width: 100%;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border 0.2s;
+  box-sizing: border-box;
+}
+
+input[type="text"].form-control:focus {
+  border: 1.5px solid #3182ce;
+  outline: none;
+}
+
+.dropdown,
+.dropdown .btn {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 16px;
+  width: 100%;
+}
+
+li {
+  background: #e6f0fa;
+  color: #2a4365;
+  margin-bottom: 10px;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  transition: background 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+li:hover {
+  background: #bee3f8;
+}
+
+@media (max-width: 700px) {
+  .center-container,
+  .container {
+    padding: 16px 2vw;
+    max-width: 98vw;
+  }
+  h1 {
+    font-size: 1.3rem;
+  }
+}
