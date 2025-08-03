@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - Fifteen Puzzle</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .profile-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .profile-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 20%, transparent 70%);
+            animation: floating 6s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(180deg); }
+        }
+        
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff6b6b, #feca57);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            border: 4px solid rgba(255,255,255,0.3);
+            position: relative;
+            z-index: 1;
+            flex-shrink: 0;
+        }
+        
+        .profile-info {
+            flex: 1;
+        }
+        
+        .profile-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .profile-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+        
+        .section-title {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            font-size: 22px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(116, 185, 255, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: transform 0.6s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(116, 185, 255, 0.4);
+        }
+        
+        .stat-card:hover::before {
+            transform: rotate(45deg) translate(100%, 100%);
+        }
+        
+        .stat-card:nth-child(2) {
+            background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%);
+            box-shadow: 0 6px 20px rgba(253, 121, 168, 0.3);
+        }
+        
+        .stat-card:nth-child(3) {
+            background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);
+            box-shadow: 0 6px 20px rgba(253, 203, 110, 0.3);
+        }
+        
+        .stat-card:nth-child(4) {
+            background: linear-gradient(135deg, #55efc4 0%, #00b894 100%);
+            box-shadow: 0 6px 20px rgba(85, 239, 196, 0.3);
+        }
+        
+        .stat-card:nth-child(5) {
+            background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+            box-shadow: 0 6px 20px rgba(162, 155, 254, 0.3);
+        }
+        
+        .stat-card:nth-child(6) {
+            background: linear-gradient(135deg, #ff7675 0%, #d63031 100%);
+            box-shadow: 0 6px 20px rgba(255, 118, 117, 0.3);
+        }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .preferences-form {
+            display: grid;
+            gap: 25px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2d3748;
+            font-size: 16px;
+        }
+        
+        .form-group select,
+        .form-group input {
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .form-group select:focus,
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-1px);
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: #f7fafc;
+            border-radius: 10px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        
+        .checkbox-group:hover {
+            border-color: #cbd5e0;
+            background: #edf2f7;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+        
+        .background-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .background-option {
+            border: 3px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            background: white;
+        }
+        
+        .background-option:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
+        }
+        
+        .background-option.selected {
+            border-color: #667eea;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.4);
+            transform: scale(1.05);
+        }
+        
+        .background-option.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #667eea;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .background-option img {
+            width: 100%;
+            height: 90px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .background-option:hover img {
+            transform: scale(1.1);
+        }
+        
+        .background-name {
+            padding: 12px;
+            text-align: center;
+            font-size: 13px;
+            background: #f7fafc;
+            color: #2d3748;
+            font-weight: 500;
+        }
+        
+        .recent-games {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .game-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            transition: background 0.3s;
+        }
+        
+        .game-item:hover {
+            background: #f8f9fa;
+        }
+        
+        .game-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .game-result {
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+        
+        .win {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .loss {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #718096 0%, #4a5568 100%);
+            box-shadow: 0 4px 15px rgba(113, 128, 150, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+            box-shadow: 0 8px 25px rgba(113, 128, 150, 0.4);
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 20px 0;
+            gap: 30px;
+        }
+        
+        .navigation h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            margin-left: auto;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #718096;
+            font-size: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .loading::before {
+            content: '';
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e2e8f0;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .alert {
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            display: none;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .alert-success {
+            background: linear-gradient(135deg, #68d391 0%, #38a169 100%);
+            color: white;
+            border-left: 5px solid #2f855a;
+        }
+        
+        .alert-error {
+            background: linear-gradient(135deg, #fc8181 0%, #e53e3e 100%);
+            color: white;
+            border-left: 5px solid #c53030;
+        }
+        
+        @media (max-width: 768px) {
+            .profile-container {
+                padding: 15px;
+                margin: 10px;
+            }
+            
+            .profile-header {
+                padding: 30px 20px;
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+            
+            .profile-avatar {
+                width: 80px;
+                height: 80px;
+                font-size: 32px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .navigation h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-buttons {
+                margin-left: 0;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            
+            .stat-card {
+                padding: 20px 15px;
+            }
+            
+            .stat-value {
+                font-size: 24px;
+            }
+            
+            .background-preview {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            
+            .btn {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .background-preview {
+                grid-template-columns: 1fr;
+            }
+            
+            .profile-header {
+                padding: 25px 15px;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <h1>My Profile</h1>
+            <div class="nav-buttons">
+                <a href="fifteen.html" class="btn">🎮 Play Game</a>
+                <a href="index.html" class="btn btn-secondary">🏠 Home</a>
+            </div>
+        </div>
+        
+        <div class="profile-container">
+            <!-- Profile Header -->
+            <div class="profile-header">
+                <div class="profile-avatar" id="user-avatar">U</div>
+                <div class="profile-info">
+                    <h2 id="username" style="margin: 0; font-size: 2rem; font-weight: 700;">Loading...</h2>
+                    <p id="user-info" style="margin: 10px 0 0; opacity: 0.9; font-size: 1.1rem;">Member since...</p>
+                </div>
+            </div>
+            
+            <!-- Statistics Section -->
+            <div class="profile-section">
+                <h3 class="section-title">📊 Game Statistics</h3>
+                <div class="stats-grid" id="stats-grid">
+                    <div class="loading">Loading statistics...</div>
+                </div>
+            </div>
+            
+            <!-- Preferences Section -->
+            <div class="profile-section">
+                <h3 class="section-title">⚙️ Game Preferences</h3>
+                <div class="alert alert-success" id="success-alert"></div>
+                <div class="alert alert-error" id="error-alert"></div>
+                
+                <form class="preferences-form" id="preferences-form">
+                    <div class="form-group">
+                        <label for="default-puzzle-size">Default Puzzle Size:</label>
+                        <select id="default-puzzle-size" name="default_puzzle_size">
+                            <option value="3x3">3x3 (Easy)</option>
+                            <option value="4x4">4x4 (Classic)</option>
+                            <option value="5x5">5x5 (Hard)</option>
+                            <option value="6x6">6x6 (Expert)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Preferred Background:</label>
+                        <div class="background-preview" id="background-preview">
+                            <div class="loading">Loading backgrounds...</div>
+                        </div>
+                        <input type="hidden" id="preferred-background" name="preferred_background_image_id" value="1">
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="sound-enabled" name="sound_enabled">
+                            <label for="sound-enabled">Enable Background Music & Sound</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="animations-enabled" name="animations_enabled">
+                            <label for="animations-enabled">Enable Animations</label>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn">💾 Save Preferences</button>
+                </form>
+            </div>
+            
+            <!-- Recent Games Section -->
+            <div class="profile-section">
+                <h3 class="section-title">🎮 Recent Games</h3>
+                <div class="recent-games" id="recent-games">
+                    <div class="loading">Loading recent games...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let userProfile = null;
+        let availableBackgrounds = [];
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Profile page loaded');
+            
+            // Show loading state
+            document.getElementById('username').textContent = 'Loading...';
+            document.getElementById('user-info').textContent = 'Checking authentication...';
+            
+            checkAuthentication().then(isAuthenticated => {
+                if (isAuthenticated) {
+                    loadUserProfile();
+                    loadAvailableBackgrounds();
+                    
+                    // Setup form submission
+                    document.getElementById('preferences-form').addEventListener('submit', savePreferences);
+                }
+            });
+        });
+        
+        async function checkAuthentication() {
+            try {
+                // Use GET request instead of POST for auth check
+                const response = await fetch('auth.php?action=check_session');
+                
+                const data = await response.json();
+                
+                if (!data.success || !data.logged_in) {
+                    // Instead of redirecting immediately, show an error
+                    document.getElementById('username').textContent = 'Not logged in';
+                    document.getElementById('user-info').textContent = 'Please log in to view your profile';
+                    showError('Please log in to access your profile. Redirecting to login page...');
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 3000);
+                    return false;
+                }
+                return true;
+            } catch (error) {
+                console.error('Authentication check failed:', error);
+                showError('Unable to verify authentication. Please refresh the page.');
+                return false;
+            }
+        }
+        
+        async function loadUserProfile() {
+            console.log('Loading user profile...');
+            try {
+                // Use GET request to user_preferences_get.php instead
+                const response = await fetch('user_preferences_get.php?action=get_user_profile');
+                
+                console.log('Profile API response status:', response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('Profile API response:', data);
+                
+                if (data.success) {
+                    userProfile = data.profile;
+                    displayUserProfile();
+                } else {
+                    showError('Failed to load profile: ' + (data.message || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Failed to load profile:', error);
+                showError('Unable to load profile data: ' + error.message);
+            }
+        }
+        
+        async function loadAvailableBackgrounds() {
+            try {
+                // Use GET request instead of POST
+                const response = await fetch('user_preferences_get.php?action=get_available_backgrounds');
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    availableBackgrounds = data.backgrounds;
+                    displayBackgroundOptions();
+                } else {
+                    console.error('Failed to load backgrounds:', data.message);
+                }
+            } catch (error) {
+                console.error('Failed to load backgrounds:', error);
+            }
+        }
+        
+        function displayUserProfile() {
+            if (!userProfile) return;
+            
+            const { user, preferences, statistics, recent_games } = userProfile;
+            
+            // Update header
+            document.getElementById('user-avatar').textContent = user.username.charAt(0).toUpperCase();
+            document.getElementById('username').textContent = user.username;
+            document.getElementById('user-info').textContent = 
+                `Member since ${new Date(user.registration_date).toLocaleDateString()}`;
+            
+            // Update statistics
+            displayStatistics(statistics);
+            
+            // Update preferences form
+            if (preferences) {
+                document.getElementById('default-puzzle-size').value = preferences.default_puzzle_size || '4x4';
+                document.getElementById('preferred-background').value = preferences.preferred_background_image_id || 1;
+                document.getElementById('sound-enabled').checked = preferences.sound_enabled == 1;
+                document.getElementById('animations-enabled').checked = preferences.animations_enabled == 1;
+            }
+            
+            // Update recent games
+            displayRecentGames(recent_games);
+        }
+        
+        function displayStatistics(stats) {
+            const statsGrid = document.getElementById('stats-grid');
+            
+            const totalGames = stats.total_games || 0;
+            const totalWins = stats.total_wins || 0;
+            const winRate = totalGames > 0 ? Math.round((totalWins / totalGames) * 100) : 0;
+            const avgTime = stats.avg_win_time ? formatTime(Math.round(stats.avg_win_time)) : 'N/A';
+            const bestTime = stats.best_time ? formatTime(stats.best_time) : 'N/A';
+            const avgMoves = stats.avg_moves ? Math.round(stats.avg_moves) : 'N/A';
+            const bestMoves = stats.best_moves || 'N/A';
+            
+            statsGrid.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-value">${totalGames}</div>
+                    <div class="stat-label">Total Games</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${totalWins}</div>
+                    <div class="stat-label">Games Won</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${winRate}%</div>
+                    <div class="stat-label">Win Rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${bestTime}</div>
+                    <div class="stat-label">Best Time</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${bestMoves}</div>
+                    <div class="stat-label">Best Moves</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${avgTime}</div>
+                    <div class="stat-label">Avg Time</div>
+                </div>
+            `;
+        }
+        
+        function displayBackgroundOptions() {
+            const preview = document.getElementById('background-preview');
+            const currentBg = document.getElementById('preferred-background').value;
+            
+            let html = '';
+            availableBackgrounds.forEach(bg => {
+                const isSelected = bg.image_id == currentBg ? 'selected' : '';
+                html += `
+                    <div class="background-option ${isSelected}" onclick="selectBackground(${bg.image_id})">
+                <img src="${bg.image_url}" alt="${bg.image_name}" onerror="this.src='uploads/background.jpg'">
+                <div class="background-name">${bg.image_name}</div>
+            </div>
+        `;
+    });            preview.innerHTML = html;
+        }
+        
+        function selectBackground(imageId) {
+            document.getElementById('preferred-background').value = imageId;
+            
+            // Update visual selection
+            document.querySelectorAll('.background-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+        }
+        
+        function displayRecentGames(games) {
+            const container = document.getElementById('recent-games');
+            
+            if (!games || games.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #666;">No games played yet.</p>';
+                return;
+            }
+            
+            let html = '';
+            games.forEach(game => {
+                const result = game.win_status == 1 ? 'Win' : 'Loss';
+                const resultClass = game.win_status == 1 ? 'win' : 'loss';
+                const time = formatTime(game.time_taken_seconds);
+                const date = new Date(game.game_date).toLocaleDateString();
+                
+                html += `
+                    <div class="game-item">
+                        <div class="game-info">
+                            <strong>${game.puzzle_size} - ${game.background_name || 'Default'}</strong>
+                            <small>${date}</small>
+                        </div>
+                        <div class="game-info">
+                            <span class="game-result ${resultClass}">${result}</span>
+                            <small>${time} • ${game.moves_count} moves</small>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        async function savePreferences(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            
+            // Use GET request with URL parameters instead of POST
+            const params = new URLSearchParams({
+                action: 'update_user_preferences',
+                default_puzzle_size: formData.get('default_puzzle_size'),
+                preferred_background_image_id: formData.get('preferred_background_image_id'),
+                sound_enabled: formData.get('sound_enabled') === 'on' ? '1' : '0',
+                animations_enabled: formData.get('animations_enabled') === 'on' ? '1' : '0'
+            });
+            
+            try {
+                const response = await fetch(`user_preferences_get.php?${params.toString()}`);
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showSuccess('Preferences saved successfully!');
+                } else {
+                    showError('Failed to save preferences: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Failed to save preferences:', error);
+                showError('Unable to save preferences. Please try again.');
+            }
+        }
+        
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+        }
+        
+        function showSuccess(message) {
+            const alert = document.getElementById('success-alert');
+            alert.textContent = message;
+            alert.style.display = 'block';
+            setTimeout(() => alert.style.display = 'none', 5000);
+        }
+        
+        function showError(message) {
+            const alert = document.getElementById('error-alert');
+            alert.textContent = message;
+            alert.style.display = 'block';
+            setTimeout(() => alert.style.display = 'none', 5000);
+        }
+    </script>
+</body>
+</html>

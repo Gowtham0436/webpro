@@ -1,0 +1,524 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Animated Gradient Background */
+body {
+    font-family: sans-serif;
+    padding: 20px;
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    height: 100vh;
+    position: relative;
+}
+
+/* Gradient animation keyframes */
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Alternative gradient animations for variety */
+@keyframes gradientWave {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    25% {
+        background-position: 100% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    75% {
+        background-position: 0% 100%;
+    }
+}
+
+/* Animated overlay for extra depth */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, 
+        rgba(255,255,255,0.1) 0%, 
+        rgba(255,255,255,0.05) 25%, 
+        rgba(0,0,0,0.05) 50%, 
+        rgba(255,255,255,0.05) 75%, 
+        rgba(255,255,255,0.1) 100%);
+    background-size: 200% 200%;
+    animation: overlayShift 20s ease infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes overlayShift {
+    0%, 100% {
+        background-position: 0% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+}
+
+/* CSS Variables */
+:root {
+    --puzzle-background: url('background.jpg');
+    --grid-size: 400px;
+    --tile-size: 100px;
+    --puzzle-size: 4;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 600px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+h1 {
+    margin-bottom: 30px;
+    color: #2d3748;
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Enhanced game info styling */
+.game-info {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(5px);
+    padding: 15px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Puzzle grid styles */
+.puzzle-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--puzzle-size), var(--tile-size));
+    grid-template-rows: repeat(var(--puzzle-size), var(--tile-size));
+    gap: 0;
+    margin: 30px auto;
+    background: transparent;
+    padding: 3px;
+    border-radius: 15px;
+    width: var(--grid-size);
+    height: var(--grid-size);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Disabled state for puzzle grid before shuffle */
+.puzzle-grid.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Add subtle animation to puzzle grid */
+.puzzle-grid::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+    transform: rotate(45deg);
+    animation: gridShimmer 3s ease-in-out infinite;
+}
+
+
+
+/* Individual tile styles */
+.tile {
+    width: var(--tile-size);
+    height: var(--tile-size);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background-image: var(--puzzle-background);
+    background-size: var(--grid-size) var(--grid-size);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32pt;
+    font-weight: bold;
+    color: #2d3748;
+    text-shadow: 
+        0 0 10px rgba(255, 255, 255, 0.8),
+        2px 2px 4px rgba(0, 0, 0, 0.3);
+    cursor: default;
+    user-select: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    border-radius: 8px;
+    backdrop-filter: blur(2px);
+    z-index: 1;
+}
+
+.tile::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.tile:hover::before {
+    opacity: 1;
+}
+
+/* Movable piece hover effect */
+.tile.movablepiece {
+    cursor: pointer;
+    border-color: #28a745;
+    color: #ffffff;
+    text-shadow: 
+        0 0 15px rgba(40, 167, 69, 0.8),
+        2px 2px 4px rgba(0, 0, 0, 0.5);
+    transform: scale(1.02);
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+}
+
+.tile.movablepiece:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.6);
+}
+
+/* Empty tile (invisible) */
+.tile.empty {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    cursor: default;
+    backdrop-filter: blur(5px);
+}
+
+/* Background positions are now handled dynamically by JavaScript */
+
+/* Game Controls Styles */
+.game-controls {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.size-selector,
+.background-selector {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.size-selector label,
+.background-selector label {
+    font-weight: bold;
+    color: #333;
+}
+
+.size-selector select,
+.background-selector select {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    background: rgb(74, 72, 72);
+    cursor: pointer;
+}
+
+.size-selector select:hover,
+.background-selector select:hover {
+    border-color: #007bff;
+}
+
+.game-info {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.game-stat {
+    font-weight: bold;
+    font-size: 18px;
+    color: #333;
+    padding: 10px 20px;
+    background: #f8f9fa;
+    border-radius: 5px;
+    border: 2px solid #ddd;
+}
+
+/* Shuffle button styles */
+.shuffle-button {
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 30px;
+    transition: background-color 0.2s ease;
+}
+
+.shuffle-button:hover {
+    background-color: #0056b3;
+}
+
+.shuffle-button:active {
+    background-color: #004494;
+}
+
+/* Validation links styles */
+.validation-links {
+    text-align: right;
+    width: 100%;
+}
+
+.validation-links a {
+    margin-left: 10px;
+    text-decoration: none;
+}
+
+.validation-links img {
+    border: none;
+    height: 31px;
+}
+
+/* Authentication Styles */
+.auth-section {
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.auth-forms {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+}
+
+.login-form, .register-form {
+    flex: 1;
+    max-width: 250px;
+}
+
+.login-form h3, .register-form h3 {
+    margin-bottom: 15px;
+    color: #333;
+    text-align: center;
+}
+
+.login-form input, .register-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.login-form button, .register-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.login-form button:hover, .register-form button:hover {
+    background-color: #0056b3;
+}
+
+/* User Section Styles */
+.user-section {
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.logout-btn {
+    padding: 8px 16px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.logout-btn:hover {
+    background-color: #c82333;
+}
+
+/* Game Info Styles */
+.game-info {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.game-stat {
+    padding: 10px 20px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 16px;
+    min-width: 100px;
+    text-align: center;
+}
+
+/* Game Statistics Styles */
+.game-stats {
+    width: 100%;
+    max-width: 600px;
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.game-stats h3 {
+    margin-bottom: 15px;
+    color: #333;
+    text-align: center;
+}
+
+.stats-container {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.stat-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 10px;
+    padding: 10px;
+    margin-bottom: 8px;
+    background-color: white;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.stat-item span {
+    text-align: center;
+    padding: 5px;
+}
+
+/* Shuffle instruction text */
+.shuffle-instruction {
+    margin-top: 10px;
+    text-align: center;
+    color: #28a745;
+    font-size: 14px;
+    font-weight: 600;
+    background: rgba(40, 167, 69, 0.1);
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(40, 167, 69, 0.3);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 2px 8px rgba(40, 167, 69, 0.2);
+    transition: opacity 0.3s ease;
+}
+
+.shuffle-instruction.hidden {
+    display: none;
+}
+
+/* Shuffle container styling */
+.shuffle-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .auth-forms {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .login-form, .register-form {
+        max-width: 100%;
+    }
+    
+    .game-info {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .stat-item {
+        grid-template-columns: 1fr 1fr;
+        gap: 5px;
+    }
+    
+    .user-info {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+}

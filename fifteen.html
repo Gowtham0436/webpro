@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fifteen Puzzle</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Starfield Background */
+        html {
+            height: 100%;
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+            overflow: hidden;
+        }
+        
+        body {
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            position: relative;
+        }
+
+        #stars {
+            width: 1px;
+            height: 1px;
+            background: transparent;
+            box-shadow: 
+                1743px 1027px #FFF, 1845px 1842px #FFF, 1542px 1705px #FFF, 234px 1693px #FFF, 1772px 533px #FFF,
+                982px 1618px #FFF, 1344px 1701px #FFF, 1478px 1402px #FFF, 825px 1853px #FFF, 1819px 162px #FFF,
+                647px 1509px #FFF, 1311px 1137px #FFF, 1093px 1067px #FFF, 1030px 897px #FFF, 1714px 1522px #FFF,
+                1422px 1989px #FFF, 566px 1875px #FFF, 1998px 1247px #FFF, 743px 1808px #FFF, 1155px 123px #FFF,
+                1876px 706px #FFF, 1574px 1945px #FFF, 1997px 1774px #FFF, 1490px 1894px #FFF, 1577px 1663px #FFF,
+                1205px 1768px #FFF, 1849px 1588px #FFF, 1260px 1149px #FFF, 1577px 1614px #FFF, 1721px 1895px #FFF,
+                1736px 1697px #FFF, 1998px 1462px #FFF, 1537px 1050px #FFF, 1372px 1583px #FFF, 1208px 1725px #FFF,
+                503px 1311px #FFF, 1611px 1031px #FFF, 1515px 1491px #FFF, 1683px 1824px #FFF, 1733px 1685px #FFF,
+                1998px 649px #FFF, 1017px 1467px #FFF, 792px 1718px #FFF, 1484px 1509px #FFF, 1372px 1697px #FFF,
+                855px 1574px #FFF, 1679px 1824px #FFF, 1998px 1574px #FFF, 1713px 1467px #FFF, 1260px 1614px #FFF,
+                1205px 1663px #FFF, 1849px 1697px #FFF, 1260px 1583px #FFF, 1577px 1725px #FFF, 503px 1031px #FFF,
+                1611px 1491px #FFF, 1515px 1824px #FFF, 1683px 1685px #FFF, 1733px 649px #FFF, 1998px 1467px #FFF,
+                1017px 1718px #FFF, 792px 1509px #FFF, 1484px 1697px #FFF, 1372px 1574px #FFF, 855px 1824px #FFF,
+                1679px 1574px #FFF, 1998px 1467px #FFF, 1713px 1614px #FFF, 1260px 1663px #FFF, 1205px 1697px #FFF;
+            animation: animStar 50s linear infinite;
+        }
+
+        #stars::after {
+            content: " ";
+            position: absolute;
+            top: 2000px;
+            width: 1px;
+            height: 1px;
+            background: transparent;
+            box-shadow: 
+                1743px 1027px #FFF, 1845px 1842px #FFF, 1542px 1705px #FFF, 234px 1693px #FFF, 1772px 533px #FFF,
+                982px 1618px #FFF, 1344px 1701px #FFF, 1478px 1402px #FFF, 825px 1853px #FFF, 1819px 162px #FFF,
+                647px 1509px #FFF, 1311px 1137px #FFF, 1093px 1067px #FFF, 1030px 897px #FFF, 1714px 1522px #FFF,
+                1422px 1989px #FFF, 566px 1875px #FFF, 1998px 1247px #FFF, 743px 1808px #FFF, 1155px 123px #FFF,
+                1876px 706px #FFF, 1574px 1945px #FFF, 1997px 1774px #FFF, 1490px 1894px #FFF, 1577px 1663px #FFF,
+                1205px 1768px #FFF, 1849px 1588px #FFF, 1260px 1149px #FFF, 1577px 1614px #FFF, 1721px 1895px #FFF,
+                1736px 1697px #FFF, 1998px 1462px #FFF, 1537px 1050px #FFF, 1372px 1583px #FFF, 1208px 1725px #FFF,
+                503px 1311px #FFF, 1611px 1031px #FFF, 1515px 1491px #FFF, 1683px 1824px #FFF, 1733px 1685px #FFF,
+                1998px 649px #FFF, 1017px 1467px #FFF, 792px 1718px #FFF, 1484px 1509px #FFF, 1372px 1697px #FFF,
+                855px 1574px #FFF, 1679px 1824px #FFF, 1998px 1574px #FFF, 1713px 1467px #FFF, 1260px 1614px #FFF,
+                1205px 1663px #FFF, 1849px 1697px #FFF, 1260px 1583px #FFF, 1577px 1725px #FFF, 503px 1031px #FFF,
+                1611px 1491px #FFF, 1515px 1824px #FFF, 1683px 1685px #FFF, 1733px 649px #FFF, 1998px 1467px #FFF,
+                1017px 1718px #FFF, 792px 1509px #FFF, 1484px 1697px #FFF, 1372px 1574px #FFF, 855px 1824px #FFF,
+                1679px 1574px #FFF, 1998px 1467px #FFF, 1713px 1614px #FFF, 1260px 1663px #FFF, 1205px 1697px #FFF;
+        }
+
+        #stars2 {
+            width: 2px;
+            height: 2px;
+            background: transparent;
+            box-shadow: 
+                790px 1991px #FFF, 1613px 1025px #FFF, 1834px 1618px #FFF, 1247px 1956px #FFF, 1645px 1229px #FFF,
+                1603px 1042px #FFF, 1696px 1506px #FFF, 1691px 1870px #FFF, 1856px 1653px #FFF, 1380px 1309px #FFF,
+                1302px 1751px #FFF, 1745px 1504px #FFF, 1690px 1805px #FFF, 1978px 1077px #FFF, 1487px 1751px #FFF,
+                1364px 1320px #FFF, 1631px 1152px #FFF, 1945px 1684px #FFF, 1805px 1728px #FFF, 1659px 1320px #FFF,
+                1631px 1728px #FFF, 1945px 1684px #FFF, 1805px 1152px #FFF, 1659px 1320px #FFF, 1631px 1728px #FFF,
+                945px 1684px #FFF, 1805px 1152px #FFF, 1659px 1320px #FFF, 1631px 1728px #FFF, 1945px 1684px #FFF,
+                1805px 1152px #FFF, 1659px 1320px #FFF, 1631px 1728px #FFF, 1945px 1684px #FFF, 1805px 1152px #FFF,
+                1659px 1320px #FFF, 1631px 1728px #FFF, 1945px 1684px #FFF, 1805px 1152px #FFF, 1659px 1320px #FFF;
+            animation: animStar 100s linear infinite;
+        }
+
+        #stars2::after {
+            content: " ";
+            position: absolute;
+            top: 2000px;
+            width: 2px;
+            height: 2px;
+            background: transparent;
+            box-shadow: 
+                790px 1991px #FFF, 1613px 1025px #FFF, 1834px 1618px #FFF, 1247px 1956px #FFF, 1645px 1229px #FFF,
+                1603px 1042px #FFF, 1696px 1506px #FFF, 1691px 1870px #FFF, 1856px 1653px #FFF, 1380px 1309px #FFF,
+                1302px 1751px #FFF, 1745px 1504px #FFF, 1690px 1805px #FFF, 1978px 1077px #FFF, 1487px 1751px #FFF,
+                1364px 1320px #FFF, 1631px 1152px #FFF, 1945px 1684px #FFF, 1805px 1728px #FFF, 1659px 1320px #FFF,
+                1631px 1728px #FFF, 1945px 1684px #FFF, 1805px 1152px #FFF, 1659px 1320px #FFF, 1631px 1728px #FFF,
+                945px 1684px #FFF, 1805px 1152px #FFF, 1659px 1320px #FFF, 1631px 1728px #FFF, 1945px 1684px #FFF,
+                1805px 1152px #FFF, 1659px 1320px #FFF, 1631px 1728px #FFF, 1945px 1684px #FFF, 1805px 1152px #FFF,
+                1659px 1320px #FFF, 1631px 1728px #FFF, 1945px 1684px #FFF, 1805px 1152px #FFF, 1659px 1320px #FFF;
+        }
+
+        #stars3 {
+            width: 3px;
+            height: 3px;
+            background: transparent;
+            box-shadow: 
+                1446px 1618px #FFF, 1344px 1701px #FFF, 478px 1402px #FFF, 825px 1853px #FFF, 1819px 162px #FFF,
+                647px 1509px #FFF, 1311px 1137px #FFF, 1093px 1067px #FFF, 1030px 897px #FFF, 1714px 1522px #FFF,
+                1422px 1989px #FFF, 566px 1875px #FFF, 1998px 1247px #FFF, 743px 1808px #FFF, 1155px 123px #FFF,
+                1876px 706px #FFF, 1574px 1945px #FFF, 1997px 1774px #FFF, 1490px 1894px #FFF, 1577px 1663px #FFF,
+                1205px 1768px #FFF, 1849px 1588px #FFF, 1260px 1149px #FFF, 1577px 1614px #FFF, 1721px 1895px #FFF,
+                1736px 1697px #FFF, 1998px 1462px #FFF, 1537px 1050px #FFF, 1372px 1583px #FFF, 1208px 1725px #FFF,
+                503px 1311px #FFF, 1611px 1031px #FFF, 1515px 1491px #FFF, 1683px 1824px #FFF, 1733px 1685px #FFF,
+                1998px 649px #FFF, 1017px 1467px #FFF, 792px 1718px #FFF, 1484px 1509px #FFF, 1372px 1697px #FFF;
+            animation: animStar 150s linear infinite;
+        }
+
+        #stars3::after {
+            content: " ";
+            position: absolute;
+            top: 2000px;
+            width: 3px;
+            height: 3px;
+            background: transparent;
+            box-shadow: 
+                1446px 1618px #FFF, 1344px 1701px #FFF, 478px 1402px #FFF, 825px 1853px #FFF, 1819px 162px #FFF,
+                647px 1509px #FFF, 1311px 1137px #FFF, 1093px 1067px #FFF, 1030px 897px #FFF, 1714px 1522px #FFF,
+                1422px 1989px #FFF, 566px 1875px #FFF, 1998px 1247px #FFF, 743px 1808px #FFF, 1155px 123px #FFF,
+                1876px 706px #FFF, 1574px 1945px #FFF, 1997px 1774px #FFF, 1490px 1894px #FFF, 1577px 1663px #FFF,
+                1205px 1768px #FFF, 1849px 1588px #FFF, 1260px 1149px #FFF, 1577px 1614px #FFF, 1721px 1895px #FFF,
+                1736px 1697px #FFF, 1998px 1462px #FFF, 1537px 1050px #FFF, 1372px 1583px #FFF, 1208px 1725px #FFF,
+                503px 1311px #FFF, 1611px 1031px #FFF, 1515px 1491px #FFF, 1683px 1824px #FFF, 1733px 1685px #FFF,
+                1998px 649px #FFF, 1017px 1467px #FFF, 792px 1718px #FFF, 1484px 1509px #FFF, 1372px 1697px #FFF;
+        }
+
+        @keyframes animStar {
+            from {
+                transform: translateY(0px);
+            }
+            to {
+                transform: translateY(-2000px);
+            }
+        }
+        
+        .container {
+            position: relative;
+            z-index: 10;
+            padding: 20px;
+            background: rgba(94, 91, 91, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .user-info {
+            background: rgba(69, 73, 77, 0.95);
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .welcome-text {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .logout-btn {
+            background: #5b5959;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .logout-btn:hover {
+            background: #c82333;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            color: #060505;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            background: -webkit-linear-gradient(white, #38495a);
+            background: linear-gradient(white, #38495a);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Lato', sans-serif;
+            font-weight: 300;
+            letter-spacing: 3px;
+            margin-bottom: 30px;
+        }
+        
+        .game-controls {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .music-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 5px 8px;
+            border-radius: 6px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .music-btn {
+            background: #b9c6d4;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            transition: background-color 0.2s;
+            min-width: 50px;
+        }
+        
+        .music-btn:hover {
+            background: #0056b3;
+        }
+        
+        .music-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+        
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+        
+        .volume-control span {
+            font-size: 10px;
+        }
+        
+        .volume-slider {
+            width: 50px;
+            height: 3px;
+        }
+        
+        /* Shuffle Button Styles */
+        .shuffle-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            padding: 15px;
+        }
+        
+        .shuffle-button {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: rgb(11, 11, 11);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 120px;
+            justify-content: center;
+        }
+        
+        .shuffle-button:hover {
+            background: linear-gradient(135deg, #218838 0%, #1da384 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        }
+        
+        .shuffle-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(40, 167, 69, 0.3);
+        }
+        
+        .shuffle-button:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 2px 8px rgba(108, 117, 125, 0.2);
+        }
+        
+        .size-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .size-selector label {
+            font-weight: bold;
+            color: #100f0f;
+        }
+        
+        .size-selector select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            background: white;
+        }
+        
+        .background-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .background-selector label {
+            font-weight: bold;
+            color: #171616;
+        }
+        
+        .background-selector select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            background: white;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 0;
+            border: none;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+        
+        @keyframes modalSlideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            padding: 20px;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+        
+        .close {
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            opacity: 0.7;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .modal-section {
+            margin: 20px 0;
+        }
+        
+        .modal-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 5px;
+        }
+        
+        .completion-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #007bff;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .leaderboard-tabs-modal {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .tab-btn-modal {
+            padding: 8px 16px;
+            border: none;
+            background: #f8f9fa;
+            color: #666;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .tab-btn-modal.active {
+            background: #007bff;
+            color: white;
+        }
+        
+        .modal-leaderboard {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .leaderboard-item-modal {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 15px;
+            margin: 5px 0;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border-left: 3px solid #007bff;
+        }
+        
+        .rank-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .rank-badge-modal {
+            background: #6c757d;
+            color: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .rank-1 { background: #FFD700; color: #333; }
+        .rank-2 { background: #C0C0C0; color: #333; }
+        .rank-3 { background: #CD7F32; color: white; }
+        
+        .player-ranking {
+            background: #e8f4f8;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #17a2b8;
+        }
+        
+        .ranking-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+        }
+        
+        .modal-footer {
+            padding: 20px;
+            border-top: 1px solid #e9ecef;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .modal-footer .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-primary {
+            background: #007bff;
+            color: rgb(97, 93, 93);
+        }
+        
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+    </style>
+</head>
+<body>
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>
+    
+    <div class="container">
+        <h1>Fifteen Puzzle</h1>
+        
+        <!-- Loading message while checking authentication -->
+        <div id="loading" class="loading">
+            Checking authentication...
+        </div>
+        
+        <!-- Game content (hidden until authenticated) -->
+        <div id="game-content" style="display: none;">
+            <!-- User info section -->
+            <div class="user-info">
+                <span class="welcome-text">Welcome, <span id="username-display"></span>!</span>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <!-- Music Controls -->
+                    <div class="music-controls">
+                        <button id="music-toggle" class="music-btn">🎵 Play</button>
+                        <div class="volume-control">
+                    
+                            <input type="range" id="volume-slider" class="volume-slider" min="0" max="100" value="50">
+                        </div>
+                    </div>
+                    <a href="profile.html" class="logout-btn" style="background: #28a745; margin-right: 10px; text-decoration: none;">Profile</a>
+                    <button id="logout-btn" class="logout-btn">Logout</button>
+                </div>
+            </div>
+            
+            <!-- Game Stats Display -->
+            <div id="game-info" class="game-info">
+                <div id="timer" class="game-stat">Time: 0:00</div>
+                <div id="move-counter" class="game-stat">Moves: 0</div>
+            </div>
+            
+            <!-- Game Controls -->
+            <div class="game-controls">
+                <!-- Puzzle Size Selector -->
+                <div class="size-selector">
+                    <label for="size-select">Size: </label>
+                    <select id="size-select">
+                        <option value="3">3x3</option>
+                        <option value="4" selected>4x4</option>
+                        <option value="5">5x5</option>
+                        <option value="6">6x6</option>
+                    </select>
+                </div>
+                
+                <!-- Background Image Selector -->
+                <div class="background-selector">
+                    <label for="background-select">Background: </label>
+                    <select id="background-select">
+                        <option value="1">Default</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div id="puzzle-grid" class="puzzle-grid">
+                <!-- Tiles will be generated by JavaScript -->
+            </div>
+            
+            <!-- Centered Shuffle Button -->
+            <div class="shuffle-container">
+                <button id="shuffle-btn" class="shuffle-button">Shuffle</button>
+                <div id="shuffle-instruction" class="shuffle-instruction">Click "Shuffle" to start playing</div>
+            </div>
+            
+            <!-- Background Music -->
+            <audio id="background-music" loop preload="auto">
+                <source src="music.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+
+            <!-- Validation links (required by assignment) -->
+            <p class="validation-links">
+                <a href="http://validator.w3.org/check/referer">
+                    <img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0 Strict" />
+                </a>
+                <a href="http://jigsaw.w3.org/css-validator/check/referer">
+                    <img src="http://jigsaw.w3.org/css-validator/images/vcss" alt="Valid CSS!" />
+                </a>
+            </p>
+        </div>
+    </div>
+    
+    <!-- Game Completion Modal -->
+    <div id="completion-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2> Puzzle Solved!</h2>
+                <span class="close" onclick="closeCompletionModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="completion-stats" class="completion-stats">
+                    <!-- Game completion stats will be inserted here -->
+                </div>
+                
+                <div class="modal-section">
+                    <h3> How You Rank</h3>
+                    <div id="player-ranking" class="player-ranking">
+                        <div class="loading">Calculating your ranking...</div>
+                    </div>
+                </div>
+                
+                <div class="modal-section">
+                    <h3>Top Players Today</h3>
+                    <div class="leaderboard-tabs-modal">
+                        <button class="tab-btn-modal active" onclick="showModalTab('time')">⚡ Speed</button>
+                        <button class="tab-btn-modal" onclick="showModalTab('moves')">Efficiency</button>
+                    </div>
+                    <div id="modal-leaderboard" class="modal-leaderboard">
+                        <div class="loading">Loading leaderboard...</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="window.location.reload()">Play Again</button>
+                <button class="btn btn-secondary" onclick="window.location.href='leaderboards.html'">View Full Leaderboards</button>
+                <button class="btn btn-secondary" onclick="window.location.href='index.html'">Home</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Authentication check
+        async function checkAuthentication() {
+            const loadingDiv = document.getElementById('loading');
+            const gameContent = document.getElementById('game-content');
+            
+            try {
+                // Check localStorage first (from login)
+                const userId = localStorage.getItem('user_id');
+                const username = localStorage.getItem('username');
+                
+                if (userId && username) {
+                    document.getElementById('username-display').textContent = username;
+                    loadingDiv.style.display = 'none';
+                    gameContent.style.display = 'block';
+                    
+                    // Wait for the display change to take effect, then initialize game
+                    requestAnimationFrame(() => {
+                        setTimeout(() => {
+                            console.log('Initializing game after display change...');
+                            window.puzzleGame = new FifteenPuzzle();
+                            console.log('Game initialized:', window.puzzleGame);
+                        }, 300);
+                    });
+                    return;
+                }
+                
+                // If not in localStorage, check server session
+                const response = await fetch('auth.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ action: 'check_session' })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success && data.logged_in) {
+                    localStorage.setItem('user_id', data.user_id);
+                    localStorage.setItem('username', data.username);
+                    localStorage.setItem('role', data.role);
+                    
+                    document.getElementById('username-display').textContent = data.username;
+                    loadingDiv.style.display = 'none';
+                    gameContent.style.display = 'block';
+                    
+                    // Wait for the display change to take effect, then initialize game
+                    requestAnimationFrame(() => {
+                        setTimeout(() => {
+                            console.log('Initializing game after display change...');
+                            window.puzzleGame = new FifteenPuzzle();
+                            console.log('Game initialized:', window.puzzleGame);
+                        }, 300);
+                    });
+                } else {
+                    // Not authenticated, redirect to login
+                    window.location.href = 'login.html';
+                }
+            } catch (error) {
+                console.error('Authentication check failed:', error);
+                window.location.href = 'login.html';
+            }
+        }
+        
+        // Logout functionality and user preferences loading
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuthentication();
+            
+            // Initialize music controls
+            initializeMusicControls();
+            
+            // Load user preferences and apply them after a delay to ensure game and music controls are ready
+            setTimeout(() => {
+                loadUserPreferences();
+            }, 1500);
+            
+            // Monitor game initialization status
+            setTimeout(() => {
+                const sizeSelect = document.getElementById('size-select');
+                if (sizeSelect && window.puzzleGame) {
+                    console.log('✓ Size selector and game both ready');
+                    console.log('Game size selector bound:', !!window.puzzleGame.sizeSelect);
+                    console.log('Game size selector element:', window.puzzleGame.sizeSelect);
+                } else {
+                    console.log('⚠ Checking status - Size selector:', !!sizeSelect, 'Game:', !!window.puzzleGame);
+                }
+            }, 2000);
+            
+            document.getElementById('logout-btn').addEventListener('click', async function() {
+                try {
+                    await fetch('auth.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ action: 'logout' })
+                    });
+                } catch (error) {
+                    console.error('Logout error:', error);
+                }
+                
+                // Clear localStorage
+                localStorage.removeItem('user_id');
+                localStorage.removeItem('username');
+                localStorage.removeItem('role');
+                
+                // Redirect to login
+                window.location.href = 'login.html';
+            });
+        });
+        
+        // User preferences management
+        let userPreferences = {
+            default_puzzle_size: '4x4',
+            preferred_background_image_id: 1,
+            sound_enabled: true,
+            animations_enabled: true
+        };
+        
+        async function loadUserPreferences() {
+            try {
+                // Use GET request to user_preferences_get.php instead
+                const response = await fetch('user_preferences_get.php?action=get_user_profile');
+                
+                const data = await response.json();
+                
+                if (data.success && data.profile && data.profile.preferences) {
+                    const prefs = data.profile.preferences;
+                    userPreferences = {
+                        default_puzzle_size: prefs.default_puzzle_size || '4x4',
+                        preferred_background_image_id: prefs.preferred_background_image_id || 1,
+                        sound_enabled: prefs.sound_enabled == 1,
+                        animations_enabled: prefs.animations_enabled == 1,
+                        background_image_path: prefs.background_image_path
+                    };
+                    
+                    console.log('Loaded user preferences:', userPreferences);
+                    
+                    // Apply preferences to game
+                    applyUserPreferences();
+                } else {
+                    console.log('No preferences found, using defaults');
+                    // Use default preferences
+                    userPreferences = {
+                        default_puzzle_size: '4x4',
+                        preferred_background_image_id: 1,
+                        sound_enabled: true,
+                        animations_enabled: true
+                    };
+                }
+            } catch (error) {
+                console.error('Failed to load user preferences:', error);
+                // Use default preferences
+                userPreferences = {
+                    default_puzzle_size: '4x4',
+                    preferred_background_image_id: 1,
+                    sound_enabled: true,
+                    animations_enabled: true
+                };
+            }
+        }
+        
+        function applyUserPreferences() {
+            console.log('Applying user preferences:', userPreferences);
+            
+            // Apply default puzzle size to the selector
+            if (userPreferences.default_puzzle_size) {
+                const sizeSelector = document.getElementById('size-select');
+                if (sizeSelector) {
+                    // Convert from '4x4' format to '4' format for the select value
+                    const sizeValue = userPreferences.default_puzzle_size.split('x')[0];
+                    sizeSelector.value = sizeValue;
+                    console.log('Set puzzle size to:', sizeValue, 'from preference:', userPreferences.default_puzzle_size);
+                    
+                    // Trigger the change event to update the game
+                    const event = new Event('change', { bubbles: true });
+                    sizeSelector.dispatchEvent(event);
+                } else {
+                    console.log('Size selector not found');
+                }
+            }
+            
+            // Apply background image - we need to load it from the database
+            if (userPreferences.preferred_background_image_id) {
+                loadBackgroundImage(userPreferences.preferred_background_image_id);
+            }
+            
+            // Apply animations setting
+            if (!userPreferences.animations_enabled) {
+                document.body.classList.add('no-animations');
+            }
+            
+            // Apply music/sound setting
+            if (window.updateMusicFromPreferences) {
+                window.updateMusicFromPreferences();
+            }
+            
+            // Store preferences in localStorage for game.js to use
+            localStorage.setItem('user_preferences', JSON.stringify(userPreferences));
+        }
+        
+        async function loadBackgroundImage(backgroundId) {
+            try {
+                // Set the background selector to the preferred background
+                const backgroundSelector = document.getElementById('background-select');
+                if (backgroundSelector) {
+                    backgroundSelector.value = backgroundId;
+                    console.log('Set background selector to:', backgroundId);
+                }
+                
+                // Update the game's background if the game is initialized
+                if (window.puzzleGame) {
+                    window.puzzleGame.currentBackgroundId = parseInt(backgroundId);
+                    window.puzzleGame.updateBackgroundImage();
+                    console.log('Applied background to game:', backgroundId);
+                } else {
+                    // Game not yet initialized, set a flag to apply later
+                    window.preferredBackgroundId = parseInt(backgroundId);
+                    console.log('Saved preferred background for later application:', backgroundId);
+                }
+            } catch (error) {
+                console.error('Failed to load background image:', error);
+            }
+        }
+        
+        // Music control functions
+        function initializeMusicControls() {
+            const backgroundMusic = document.getElementById('background-music');
+            const musicToggle = document.getElementById('music-toggle');
+            const volumeSlider = document.getElementById('volume-slider');
+            
+            let isPlaying = false;
+            
+            // Set initial volume
+            backgroundMusic.volume = volumeSlider.value / 100;
+            
+            // Function to update music based on preferences
+            function updateMusicFromPreferences() {
+                const soundEnabled = userPreferences.sound_enabled;
+                
+                if (soundEnabled && !isPlaying) {
+                    // Auto-play music if sound is enabled
+                    backgroundMusic.play().then(() => {
+                        musicToggle.textContent = '⏸️ Pause';
+                        musicToggle.style.background = '#28a745';
+                        isPlaying = true;
+                        console.log('Auto-started music based on user preference');
+                    }).catch((error) => {
+                        console.log('Auto-play failed (browser restriction):', error);
+                        // Browser blocks autoplay, user needs to click
+                        musicToggle.textContent = '🎵 Play';
+                        musicToggle.style.background = '#007bff';
+                    });
+                } else if (!soundEnabled && isPlaying) {
+                    // Stop music if sound is disabled
+                    backgroundMusic.pause();
+                    musicToggle.textContent = '🎵 Play';
+                    musicToggle.style.background = '#007bff';
+                    isPlaying = false;
+                }
+            }
+            
+            // Music toggle functionality
+            musicToggle.addEventListener('click', function() {
+                if (isPlaying) {
+                    backgroundMusic.pause();
+                    musicToggle.textContent = '🎵 Play';
+                    musicToggle.style.background = '#007bff';
+                    isPlaying = false;
+                    
+                    // Update user preference to disable sound
+                    updateSoundPreference(false);
+                } else {
+                    // Try to play music (browsers require user interaction)
+                    backgroundMusic.play().then(() => {
+                        musicToggle.textContent = '⏸️ Pause';
+                        musicToggle.style.background = '#28a745';
+                        isPlaying = true;
+                        
+                        // Update user preference to enable sound
+                        updateSoundPreference(true);
+                    }).catch((error) => {
+                        console.log('Music play failed:', error);
+                        alert('Unable to play music. Please check if the music.mp3 file is accessible.');
+                    });
+                }
+            });
+            
+            // Volume control
+            volumeSlider.addEventListener('input', function() {
+                backgroundMusic.volume = this.value / 100;
+            });
+            
+            // Handle music ending (shouldn't happen with loop, but just in case)
+            backgroundMusic.addEventListener('ended', function() {
+                musicToggle.textContent = '🎵 Play';
+                musicToggle.style.background = '#007bff';
+                isPlaying = false;
+            });
+            
+            // Handle music loading errors
+            backgroundMusic.addEventListener('error', function() {
+                console.error('Error loading music file');
+                musicToggle.disabled = true;
+                musicToggle.textContent = 'No Music';
+            });
+            
+            // Make function available globally for preference updates
+            window.updateMusicFromPreferences = updateMusicFromPreferences;
+            
+            console.log('Music controls initialized');
+        }
+        
+        // Function to update sound preference when user changes music
+        async function updateSoundPreference(soundEnabled) {
+            try {
+                // Update local preference
+                userPreferences.sound_enabled = soundEnabled;
+                
+                // Get user ID from localStorage
+                const userId = localStorage.getItem('user_id');
+                if (!userId) {
+                    console.log('No user ID found, cannot save sound preference');
+                    return;
+                }
+                
+                // Save to database
+                const response = await fetch('user_preferences_api.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        action: 'update_user_preferences',
+                        user_id: parseInt(userId),
+                        default_puzzle_size: userPreferences.default_puzzle_size,
+                        preferred_background_image_id: userPreferences.preferred_background_image_id,
+                        sound_enabled: soundEnabled,
+                        animations_enabled: userPreferences.animations_enabled
+                    })
+                });
+                
+                const data = await response.json();
+                if (data.success) {
+                    console.log('Sound preference updated:', soundEnabled);
+                } else {
+                    console.error('Failed to update sound preference:', data.message);
+                }
+            } catch (error) {
+                console.error('Error updating sound preference:', error);
+            }
+        }
+        
+        // Modal functions for game completion
+        let currentModalTab = 'time';
+        let modalLeaderboardData = {};
+        
+        function showCompletionModal(timeElapsed, moveCount) {
+            // Show completion stats
+            document.getElementById('completion-stats').innerHTML = `
+                <div class="stat-item">
+                    <div class="stat-value">${formatTime(timeElapsed)}</div>
+                    <div class="stat-label">Your Time</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${moveCount}</div>
+                    <div class="stat-label">Your Moves</div>
+                </div>
+            `;
+            
+            // Load user ranking and leaderboard
+            loadPlayerRanking();
+            loadModalLeaderboard();
+            
+            // Show modal
+            document.getElementById('completion-modal').style.display = 'block';
+        }
+        
+        function closeCompletionModal() {
+            document.getElementById('completion-modal').style.display = 'none';
+        }
+        
+        function showModalTab(tab) {
+            currentModalTab = tab;
+            
+            // Update tab buttons
+            document.querySelectorAll('.tab-btn-modal').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Show appropriate leaderboard data
+            displayModalLeaderboard();
+        }
+        
+        async function loadPlayerRanking() {
+            const userId = localStorage.getItem('user_id');
+            if (!userId) return;
+            
+            try {
+                const response = await fetch('leaderboard_api.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'get_user_profile',
+                        user_id: parseInt(userId)
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success && data.rankings['4x4']) {
+                    const ranking = data.rankings['4x4'];
+                    document.getElementById('player-ranking').innerHTML = `
+                        <div class="ranking-item">
+                            <span>Time Rank:</span>
+                            <strong>#${ranking.time_rank || 'N/A'}</strong>
+                        </div>
+                        <div class="ranking-item">
+                            <span>Moves Rank:</span>
+                            <strong>#${ranking.moves_rank || 'N/A'}</strong>
+                        </div>
+                        <div class="ranking-item">
+                            <span>Total Wins:</span>
+                            <strong>${ranking.total_wins || 0}</strong>
+                        </div>
+                    `;
+                } else {
+                    document.getElementById('player-ranking').innerHTML = 
+                        '<p>Play more games to see your ranking!</p>';
+                }
+            } catch (error) {
+                console.error('Failed to load player ranking:', error);
+                document.getElementById('player-ranking').innerHTML = 
+                    '<p>Unable to load ranking data.</p>';
+            }
+        }
+        
+        async function loadModalLeaderboard() {
+            try {
+                const response = await fetch('leaderboard_api.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'get_global_leaderboards',
+                        puzzle_size: '4x4',
+                        category: 'all',
+                        limit: 5
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    modalLeaderboardData = data.leaderboards;
+                    displayModalLeaderboard();
+                } else {
+                    document.getElementById('modal-leaderboard').innerHTML = 
+                        '<p>No leaderboard data available.</p>';
+                }
+            } catch (error) {
+                console.error('Failed to load modal leaderboard:', error);
+                document.getElementById('modal-leaderboard').innerHTML = 
+                    '<p>Unable to load leaderboard.</p>';
+            }
+        }
+        
+        function displayModalLeaderboard() {
+            if (!modalLeaderboardData) return;
+            
+            let data, statKey;
+            
+            if (currentModalTab === 'time') {
+                data = modalLeaderboardData.best_time || [];
+                statKey = 'best_time';
+            } else {
+                data = modalLeaderboardData.best_moves || [];
+                statKey = 'best_moves';
+            }
+            
+            if (data.length === 0) {
+                document.getElementById('modal-leaderboard').innerHTML = 
+                    '<p>No data available.</p>';
+                return;
+            }
+            
+            let html = '';
+            data.slice(0, 5).forEach((player, index) => {
+                const rank = index + 1;
+                const rankClass = rank <= 3 ? `rank-${rank}` : '';
+                
+                let statValue;
+                if (statKey === 'best_time') {
+                    statValue = formatTime(player[statKey]);
+                } else {
+                    statValue = player[statKey];
+                }
+                
+                html += `
+                    <div class="leaderboard-item-modal">
+                        <div class="rank-info">
+                            <div class="rank-badge-modal ${rankClass}">${rank}</div>
+                            <span><strong>${player.username}</strong></span>
+                        </div>
+                        <span>${statValue}</span>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('modal-leaderboard').innerHTML = html;
+        }
+        
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+        }
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('completion-modal');
+            if (event.target === modal) {
+                closeCompletionModal();
+            }
+        }
+    </script>
+    <script src="fifteen.js"></script>
+</body>
+</html>

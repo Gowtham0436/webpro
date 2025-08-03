@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fifteen Puzzle - Welcome</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .welcome-container {
+            max-width: 600px;
+            margin: 50px auto;
+            text-align: center;
+            padding: 40px;
+            background: #eba75e;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        .welcome-container h1 {
+                color: #333;
+                margin-bottom: 20px;
+        }
+        
+        .welcome-container p {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 18px;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: #689ad0;
+            color: white;   
+        }
+        
+        .btn-primary:hover {
+            background: #e6b360;
+        }
+        
+        .btn-secondary {
+            background: #e76563;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #1e7e34;
+        }
+        
+        .game-preview {
+            margin: 40px 0;
+            padding: 20px;
+            background: #e8a37a;
+            border-radius: 5px;
+        }
+        
+        .features {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            display: inline-block;
+        }
+        
+        .features li {
+            margin: 10px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        
+        
+        .announcement-item {
+            background: #84acc9;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            text-align: left;
+        }
+        
+        .announcement-title {
+            font-weight: bold;
+            color: #151514;
+            margin-bottom: 8px;
+        }
+        
+        .announcement-content {
+            color: #161515;
+            line-height: 1.5;
+        }
+        
+        .announcement-date {
+            font-size: 12px;
+            color: #82380a;
+            margin-top: 8px;
+        }
+        
+        .leaderboard-tabs {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            margin: 15px 0;
+        }
+        
+        .tab-btn {
+            padding: 8px 15px;
+            border: none;
+            background: #f8f9fa;
+            color: #666;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+        
+        .tab-btn.active {
+            background: #007bff;
+            color: white;
+        }
+        
+        .tab-btn:hover {
+            background: #0056b3;
+            color: white;
+        }
+        
+        .leaderboard-mini { 
+            background: #dc9c7a;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .leaderboard-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #080808;
+        }
+        
+        .leaderboard-item:last-child {
+            border-bottom: none;
+        }
+        
+        .rank-badge {
+            background: #6c757d;
+            color: rgb(237, 139, 139);
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .rank-1 { background: #FFD700; color: #333; }
+        .rank-2 { background: #C0C0C0; color: #333; }
+        .rank-3 { background: #CD7F32; color: white; }
+        
+        .player-info {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+        }
+        
+        .player-name {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .player-stat {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #666;
+            padding: 20px;
+        }
+        
+        /* Animated Pattern Background */
+        body {
+            --s: 140px; /* control the size */
+            --c1: #AB3E5B;
+            --c2: #FFBE40;
+            
+            --_g: 
+                #0000 25%,#0008 47%,var(--c1)  53% 147%,var(--c2) 153% 247%,
+                var(--c1) 253% 347%,var(--c2) 353% 447%,var(--c1) 453% 547%,#0008 553%,#0000 575%;
+            --_s: calc(25%/3) calc(25%/4) at 50%; 
+            background:
+                radial-gradient(var(--_s) 100%,var(--_g)),
+                radial-gradient(var(--_s) 100%,var(--_g)) calc(var(--s)/2) calc(3*var(--s)/4),
+                radial-gradient(var(--_s) 0   ,var(--_g)) calc(var(--s)/2) 0,
+                radial-gradient(var(--_s) 0   ,var(--_g)) 0                calc(3*var(--s)/4),
+                repeating-linear-gradient(90deg,#ACCEC0 calc(25%/-6) calc(25%/6),#61A6AB 0 calc(25%/2));
+            background-size: var(--s) calc(3*var(--s)/2);
+            animation: m 2.5s infinite linear;
+            min-height: 100vh;
+        } 
+
+        @keyframes m {
+            to {
+                background-position:
+                    var(--s) 0,
+                    calc(var(--s)/-2) calc(3*var(--s)/4),
+                    calc(3*var(--s)/2) 0,
+                    calc(-1*var(--s)) calc(3*var(--s)/4),
+                    0 0
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="welcome-container">
+            <h1>Welcome to Fifteen Puzzle</h1>
+            <p>Challenge yourself with the classic sliding puzzle game!</p>
+            
+            <div class="game-preview">
+                <h3>Game Features:</h3>
+                <ul class="features">
+                    <li>Classic 4x4 sliding puzzle with custom background images</li>
+                    <li>Timer and move counter to track your progress</li>
+                    <li>Smart shuffle algorithm ensuring solvable puzzles</li>
+                    <li>Save your game statistics and compete on leaderboards</li>
+                    <li>Responsive design with smooth animations</li>
+                </ul>
+            </div>
+            
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-primary">Login</a>
+                <a href="register.html" class="btn btn-secondary">Register</a>
+            </div>
+            
+            <!-- Admin link (will be shown for admin users) -->
+            <div id="admin-link" style="display: none; margin-top: 20px;">
+                <a href="admin_dashboard.html" class="btn" style="background: #6f42c1; color: white;">Admin Dashboard</a>
+            </div>
+            
+            <!-- Announcements section -->
+            <div id="announcements-section" style="margin-top: 40px; display: none;">
+                <h3>Latest News & Announcements</h3>
+                <div id="announcements-list"></div>
+            </div>
+            
+            <!-- Leaderboard preview section -->
+            <div id="leaderboard-preview" style="margin-top: 40px;">
+                <h3>Current Champions</h3>
+                <div class="leaderboard-tabs">
+                    <button class="tab-btn active" onclick="showLeaderboardTab('speed')"> Speed</button>
+                    <button class="tab-btn" onclick="showLeaderboardTab('efficiency')"> Efficiency</button>
+                    <button class="tab-btn" onclick="showLeaderboardTab('wins')"> Most Wins</button>
+                </div>
+                <div id="leaderboard-content">
+                    <div class="loading">Loading leaderboard...</div>
+                </div>
+                <div style="text-align: center; margin-top: 15px;">
+                    <a href="leaderboards.html" class="btn" style="background: #28a745; color: white; text-decoration: none;">View Full Leaderboards</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Validation links (required by assignment) -->
+        <p class="validation-links">
+            <a href="http://validator.w3.org/check/referer">
+                <img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0 Strict" />
+            </a>
+            <a href="http://jigsaw.w3.org/css-validator/check/referer">
+                <img src="http://jigsaw.w3.org/css-validator/images/vcss" alt="Valid CSS!" />
+            </a>
+        </p>
+    </div>
+    
+    <script>
+        // Check if user is already logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            checkUserSession();
+            loadAnnouncements();
+            loadLeaderboardPreview();
+        });
+        
+        async function checkUserSession() {
+            try {
+                const response = await fetch('auth.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ action: 'check_session' })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success && data.logged_in) {
+                    // User is logged in
+                    const authButtons = document.querySelector('.auth-buttons');
+                    authButtons.innerHTML = `
+                        <a href="fifteen.html" class="btn btn-primary">Play Game</a>
+                        <a href="profile.html" class="btn" style="background: #28a745; color: white;"> Profile</a>
+                        <button onclick="logout()" class="btn btn-secondary">Logout</button>
+                    `;
+                    
+                    // Show admin link if user is admin
+                    if (data.role === 'admin') {
+                        document.getElementById('admin-link').style.display = 'block';
+                    }
+                }
+            } catch (error) {
+                console.error('Session check failed:', error);
+            }
+        }
+        
+        async function loadAnnouncements() {
+            try {
+                const response = await fetch('public_api.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ action: 'get_active_announcements' })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success && data.announcements.length > 0) {
+                    const section = document.getElementById('announcements-section');
+                    const list = document.getElementById('announcements-list');
+                    
+                    list.innerHTML = '';
+                    data.announcements.forEach(announcement => {
+                        const item = document.createElement('div');
+                        item.className = 'announcement-item';
+                        item.innerHTML = `
+                            <div class="announcement-title">${announcement.title}</div>
+                            <div class="announcement-content">${announcement.content}</div>
+                            <div class="announcement-date">${new Date(announcement.created_date).toLocaleDateString()}</div>
+                        `;
+                        list.appendChild(item);
+                    });
+                    
+                    section.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Failed to load announcements:', error);
+            }
+        }
+        
+        async function logout() {
+            try {
+                const response = await fetch('auth.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ action: 'logout' })
+                });
+                
+                localStorage.clear();
+                location.reload();
+            } catch (error) {
+                console.error('Logout failed:', error);
+            }
+        }
+        
+        let currentLeaderboardTab = 'speed';
+        
+        async function loadLeaderboardPreview() {
+            try {
+                const response = await fetch('leaderboard_api.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'get_global_leaderboards',
+                        puzzle_size: '4x4',
+                        category: 'all',
+                        limit: 5
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayLeaderboardPreview(data.leaderboards);
+                } else {
+                    document.getElementById('leaderboard-content').innerHTML = 
+                        '<p style="text-align: center; color: #666;">No leaderboard data available yet.</p>';
+                }
+            } catch (error) {
+                console.error('Failed to load leaderboard:', error);
+                document.getElementById('leaderboard-content').innerHTML = 
+                    '<p style="text-align: center; color: #666;">Unable to load leaderboard.</p>';
+            }
+        }
+        
+        function showLeaderboardTab(tab) {
+            currentLeaderboardTab = tab;
+            
+            // Update tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Show appropriate leaderboard data
+            displayCurrentTab();
+        }
+        
+        function displayLeaderboardPreview(leaderboards) {
+            // Store leaderboard data globally
+            window.leaderboardData = leaderboards;
+            displayCurrentTab();
+        }
+        
+        function displayCurrentTab() {
+            if (!window.leaderboardData) return;
+            
+            const content = document.getElementById('leaderboard-content');
+            let data, title, statKey, statLabel;
+            
+            switch (currentLeaderboardTab) {
+                case 'speed':
+                    data = window.leaderboardData.best_time || [];
+                    title = '⚡ Fastest Times';
+                    statKey = 'best_time';
+                    statLabel = 'Time';
+                    break;
+                case 'efficiency':
+                    data = window.leaderboardData.best_moves || [];
+                    title = 'Fewest Moves';
+                    statKey = 'best_moves';
+                    statLabel = 'Moves';
+                    break;
+                case 'wins':
+                    data = window.leaderboardData.most_wins || [];
+                    title = 'Most Victories';
+                    statKey = 'total_wins';
+                    statLabel = 'Wins';
+                    break;
+                default:
+                    data = [];
+            }
+            
+            if (data.length === 0) {
+                content.innerHTML = '<p style="text-align: center; color: #666;">No data available yet.</p>';
+                return;
+            }
+            
+            let html = '<div class="leaderboard-mini">';
+            
+            data.slice(0, 5).forEach((player, index) => {
+                const rank = index + 1;
+                const rankClass = rank <= 3 ? `rank-${rank}` : '';
+                
+                let statValue;
+                if (statKey === 'best_time') {
+                    const mins = Math.floor(player[statKey] / 60);
+                    const secs = Math.floor(player[statKey] % 60);
+                    statValue = `${mins}:${secs.toString().padStart(2, '0')}`;
+                } else {
+                    statValue = player[statKey];
+                }
+                
+                html += `
+                    <div class="leaderboard-item">
+                        <div class="player-info">
+                            <div class="rank-badge ${rankClass}">${rank}</div>
+                            <div>
+                                <div class="player-name">${player.username}</div>
+                                <div class="player-stat">${statLabel}: ${statValue}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            content.innerHTML = html;
+        }
+    </script>
+</body>
+</html>

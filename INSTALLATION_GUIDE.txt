@@ -1,0 +1,45 @@
+# INSTALLATION GUIDE
+
+## Prerequisites:
+- Web server (Apache/Nginx)
+- PHP 7.4 or higher
+- MySQL 5.7 or higher
+- Modern web browser
+
+## Step-by-Step Installation:
+
+### 1. Upload Files
+- Extract the zip file to your web server directory
+- Ensure all files are in the same folder
+
+### 2. Database Setup
+- Run: php setup_database.php
+- This will create all necessary tables
+
+### 3. Configuration
+- Edit config.php with your database credentials:
+  - DB_HOST (usually 'localhost')
+  - DB_USERNAME (your database username)
+  - DB_PASSWORD (your database password)
+  - DB_DATABASE (your database name)
+
+### 4. File Permissions
+- Ensure web server can read all files
+- PHP files should have execute permissions
+
+### 5. Access the Application
+- Open fifteen.html in your web browser
+- Register a new account or login
+- Start playing!
+
+### 6. Admin Access
+- Access admin_dashboard.html
+- Default admin credentials can be created via setup_database.php
+
+## Troubleshooting:
+- Check PHP error logs for issues
+- Verify database connection in config.php
+- Ensure all required PHP extensions are installed
+
+## Support:
+Refer to SYSTEM_DOCUMENTATION.md for detailed technical information.
