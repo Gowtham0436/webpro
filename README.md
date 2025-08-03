@@ -5,42 +5,42 @@ A sophisticated web-based implementation of the classic 15-puzzle game with adva
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-CODD%20Server-blue)](https://codd.cs.gsu.edu/~sjuyal1/Puzzle_Game/fifteen.html)
 [![GitHub](https://img.shields.io/badge/GitHub-Repository-green)](https://github.com/Gowtham0436/webpro.git)
 
-## 🌟 Features
+##  Features
 
-### 🎯 Core Game Features
+###  Core Game Features
 - **Mathematical Solvability Algorithm**: Ensures every generated puzzle is solvable
 - **Responsive Design**: Works seamlessly on desktop and mobile devices
 - **Smooth Animations**: CSS3 transitions for enhanced user experience
 - **Timer & Move Counter**: Track your performance in real-time
 - **Multiple Difficulty Levels**: Customizable puzzle complexity
 
-### 🔐 User Management
+### User Management
 - **Secure Authentication**: Registration and login system
 - **User Profiles**: Personal statistics and preferences
 - **Session Management**: Secure PHP session handling
 - **Password Encryption**: Bcrypt hashing for security
 
-### 📊 Statistics & Analytics
+###  Statistics & Analytics
 - **Real-time Game Stats**: Track moves, time, and completion rates
 - **Personal Leaderboards**: Compare your best times
 - **Global Rankings**: Compete with other players
 - **Performance Analytics**: Detailed game statistics
 
-### ⚙️ Administrative Panel
+### Administrative Panel
 - **Content Management System**: Full CRUD operations
 - **User Management**: Admin control over user accounts
 - **Game Configuration**: Customize game settings
 - **Statistics Dashboard**: Monitor platform usage
 
-## 🚀 Live Demo
+##  Live Demo
 
-**🎮 Play the Game**: [https://codd.cs.gsu.edu/~sjuyal1/Puzzle_Game/fifteen.html](https://codd.cs.gsu.edu/~sjuyal1/Puzzle_Game/fifteen.html)
+**Play the Game**: [https://codd.cs.gsu.edu/~sjuyal1/Puzzle_Game/fifteen.html](https://codd.cs.gsu.edu/~sjuyal1/Puzzle_Game/fifteen.html)
 
-**📋 Project Info**: [https://codd.cs.gsu.edu/~sjuyal1/Puzzle_Game/info.html](https://codd.cs.gsu.edu/~sjuyal1/Puzzle_Game/info.html)
+** Project Info**: [https://codd.cs.gsu.edu/~sjuyal1/Puzzle_Game/info.html](https://codd.cs.gsu.edu/~sjuyal1/Puzzle_Game/info.html)
 
-**🔧 Admin Panel**: [https://codd.cs.gsu.edu/~sjuyal1/Puzzle_Game/admin_dashboard.html](https://codd.cs.gsu.edu/~sjuyal1/Puzzle_Game/admin_dashboard.html)
+** Admin Panel**: [https://codd.cs.gsu.edu/~sjuyal1/Puzzle_Game/admin_dashboard.html](https://codd.cs.gsu.edu/~sjuyal1/Puzzle_Game/admin_dashboard.html)
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 - **Frontend**: HTML5, CSS3, JavaScript (ES6+)
 - **Backend**: PHP 7.4+
@@ -49,7 +49,7 @@ A sophisticated web-based implementation of the classic 15-puzzle game with adva
 - **Security**: Bcrypt password hashing, CSRF protection
 - **Design**: Responsive CSS Grid/Flexbox
 
-## 📦 Installation
+##  Installation
 
 ### Prerequisites
 - PHP 7.4 or higher
@@ -98,58 +98,58 @@ cd ~/public_html/
 # Access via: https://codd.cs.gsu.edu/~username/Puzzle_Game/fifteen.html
 ```
 
-## 🎮 How to Play
+## How to Play
 
 1. **Objective**: Arrange numbered tiles in order from 1-15
 2. **Movement**: Click tiles adjacent to the empty space
 3. **Goal**: Complete the puzzle in minimum moves and time
 4. **Features**: Use shuffle for new games, reset to start over
 
-## 🔑 Default Login Credentials
+##  Default Login Credentials
 
 **Administrator Account:**
 - Username: `admin`
 - Password: `admin123`
 
 **Player Account:**
-- Username: `player1` 
-- Password: `player123`
+- Username: `ssilvia` 
+- Password: `test123`
 
 ## 📁 Project Structure
 
 ```
 Puzzle_Game/
-├── 🎮 Game Files
+├── Game Files
 │   ├── fifteen.html          # Main game interface
 │   ├── fifteen.js            # Game logic & algorithms
 │   └── styles.css            # Game styling
-├── 🔐 Authentication
+├── Authentication
 │   ├── auth.php              # Authentication logic
 │   ├── login.html            # Login interface
 │   └── register.html         # Registration interface
-├── ⚙️ Admin Panel
+├──  Admin Panel
 │   ├── admin_dashboard.html  # Admin interface
 │   ├── admin_dashboard.js    # Admin functionality
 │   └── admin_styles.css      # Admin styling
-├── 📊 API & Backend
+├── API & Backend
 │   ├── api.php               # Main API endpoint
 │   ├── game_stats.php        # Statistics handling
 │   ├── leaderboard_api.php   # Leaderboard functionality
 │   └── user_preferences_api.php # User settings
-├── 🗄️ Database
+├── Database
 │   ├── config.php            # Database configuration
 │   ├── setup_database.php    # Database setup script
 │   └── database_dump.sql     # Sample database
-├── 📋 Documentation
+├──  Documentation
 │   ├── README.md             # This file
 │   └── info.html            # Project information
-└── 🧪 Testing
+└── Testing
     ├── test_auth.php         # Authentication tests
     ├── test_game.php         # Game logic tests
     └── debug_profile.php     # Performance profiling
 ```
 
-## 🧮 Algorithm Details
+## Algorithm Details
 
 ### Solvability Check
 The game implements a mathematical algorithm to ensure puzzle solvability:
@@ -162,7 +162,7 @@ The game implements a mathematical algorithm to ensure puzzle solvability:
 - Optimized DOM manipulation
 - Minimal API calls for better performance
 
-## 🛡️ Security Features
+## Security Features
 
 - **Input Validation**: All user inputs are sanitized
 - **SQL Injection Prevention**: Prepared statements used
@@ -171,14 +171,14 @@ The game implements a mathematical algorithm to ensure puzzle solvability:
 - **Secure Sessions**: Proper session management
 - **Password Security**: Bcrypt hashing with salt
 
-## 🎨 Design Philosophy
+## Design Philosophy
 
 - **Mobile-First**: Responsive design for all devices
 - **Accessibility**: ARIA labels and keyboard navigation
 - **User Experience**: Intuitive interface with visual feedback
 - **Performance**: Optimized loading and smooth animations
 
-## 👥 Team
+## Team
 
 **Team Name**: Flash Coders
 
@@ -186,14 +186,14 @@ The game implements a mathematical algorithm to ensure puzzle solvability:
 - **Silvia Juyal** - Chief Programmer and Designer
 - **Satchigolla Gowtham Karthikeya** - Developer and Tester
 
-## 📈 Project Resources
+##  Project Resources
 
-- **📹 Presentation Video**: [YouTube Demo](https://www.youtube.com/watch?v=rXQJSoYruYI)
-- **📊 PowerPoint**: [Project Presentation](https://www.youtube.com/watch?v=rXQJSoYruYI)
-- **🌐 Live Demo**: [CODD Server](https://codd.cs.gsu.edu/~sjuyal1/Puzzle_Game/)
-- **💻 Source Code**: [GitHub Repository](https://github.com/Gowtham0436/webpro.git)
+- ** Presentation Video**: [YouTube Demo](https://www.youtube.com/watch?v=rXQJSoYruYI)
+- **PowerPoint**: [Project Presentation](https://www.youtube.com/watch?v=rXQJSoYruYI)
+- **Live Demo**: [CODD Server](https://codd.cs.gsu.edu/~sjuyal1/Puzzle_Game/)
+- **Source Code**: [GitHub Repository](https://github.com/Gowtham0436/webpro.git)
 
-## 🚀 API Endpoints
+##  API Endpoints
 
 ### Game API
 - `GET /api.php?action=getStats` - Retrieve game statistics
@@ -209,7 +209,7 @@ The game implements a mathematical algorithm to ensure puzzle solvability:
 - `GET /admin_api.php?action=getUsers` - Manage users
 - `POST /admin_api.php?action=updateSettings` - Update configurations
 
-## 🧪 Testing
+##  Testing
 
 Run the test suite:
 ```bash
@@ -218,7 +218,7 @@ php test_game.php      # Game logic tests
 php test_connection.php # Database connectivity
 ```
 
-## 📝 Configuration
+##  Configuration
 
 ### Database Setup (config.php)
 ```php
@@ -233,7 +233,7 @@ define('DB_DATABASE', 'fifteen_puzzle');
 - Customize themes in `styles.css`
 - Adjust API endpoints in `api-client.js`
 
-## 🐛 Troubleshooting
+##  Troubleshooting
 
 **Common Issues:**
 
@@ -251,7 +251,7 @@ define('DB_DATABASE', 'fifteen_puzzle');
    - Check browser console for errors
    - Ensure JavaScript is enabled
 
-## 🤝 Contributing
+##  Contributing
 
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature-name`
@@ -259,11 +259,11 @@ define('DB_DATABASE', 'fifteen_puzzle');
 4. Push to branch: `git push origin feature-name`
 5. Submit a Pull Request
 
-## 📄 License
+## License
 
 This project is created for educational purposes as part of a web development course.
 
-## 🙏 Acknowledgments
+##  Acknowledgments
 
 - Classic 15-puzzle game inspiration
 - Mathematical algorithms for puzzle solvability
@@ -272,8 +272,8 @@ This project is created for educational purposes as part of a web development co
 
 ---
 
-**🎮 Ready to play?** [Start the Fifteen Puzzle Game!](https://codd.cs.gsu.edu/~sjuyal1/Puzzle_Game/fifteen.html)
+** Ready to play?** [Start the Fifteen Puzzle Game!](https://codd.cs.gsu.edu/~sjuyal1/Puzzle_Game/fifteen.html)
 
 ---
 
-*Last Updated: August 2025 | Built with ❤️ by Flash Coders Team*
+
